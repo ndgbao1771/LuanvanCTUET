@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LuanvanCTUET.Data\LuanvanCTUET.Data.csproj" />
+    <ProjectReference Include="..\LuanvanCTUET.Infrastructure\LuanvanCTUET.Infrastructure.csproj" />
+    <ProjectReference Include="..\LuanvanCTUET.Utilities\LuanvanCTUET.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+    <Folder Include="Extension\" />
+    <Folder Include="Repository\" />
+  </ItemGroup>
+
+</Project>

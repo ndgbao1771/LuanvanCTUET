@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LuanvanCTUET.Infrastructure\LuanvanCTUET.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entity\" />
+    <Folder Include="Enum\" />
+    <Folder Include="Interface\" />
+    <Folder Include="IRepository\" />
+  </ItemGroup>
+
+</Project>

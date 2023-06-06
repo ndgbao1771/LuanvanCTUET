@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LuanvanCTUET.Data.EF\LuanvanCTUET.Data.EF.csproj" />
+    <ProjectReference Include="..\LuanvanCTUET.Data\LuanvanCTUET.Data.csproj" />
+    <ProjectReference Include="..\LuanvanCTUET.Infrastructure\LuanvanCTUET.Infrastructure.csproj" />
+    <ProjectReference Include="..\LuanvanCTUET.Service\LuanvanCTUET.Service.csproj" />
+    <ProjectReference Include="..\LuanvanCTUET.Utilities\LuanvanCTUET.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>
