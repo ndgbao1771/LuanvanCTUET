@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using LuanvanCTUET.Data.Entity;
+using LuanvanCTUET.Service.ViewModel.Product;
 
 namespace LuanvanCTUET.Service.AutoMapper
 {
-    internal class DomainToViewModel
+    public class DomainToViewModel : Profile
     {
+        public DomainToViewModel()
+        {
+            CreateMap<Category, CategoryViewModel>();
+        }
     }
 }
