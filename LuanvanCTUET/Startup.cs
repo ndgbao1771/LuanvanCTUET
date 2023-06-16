@@ -3,6 +3,7 @@ using LuanvanCTUET.Data.EF;
 using LuanvanCTUET.Data.EF.Repository;
 using LuanvanCTUET.Data.Entity;
 using LuanvanCTUET.Data.IRepository;
+using LuanvanCTUET.Infrastructure.Interface;
 using LuanvanCTUET.Service.AutoMapper;
 using LuanvanCTUET.Service.Implementation;
 using LuanvanCTUET.Service.Interface;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Reflection;
 
 namespace LuanvanCTUET
@@ -36,6 +38,24 @@ namespace LuanvanCTUET
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+            //Configure Identity
+            services.Configure<IdentityOptions>(options =>
+            {
+                //Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+
+                //Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                //User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
 
@@ -46,11 +66,13 @@ namespace LuanvanCTUET
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICategoryService, CategoryService>();
 
+            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbInitializer dbInitializer)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -76,7 +98,6 @@ namespace LuanvanCTUET
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            dbInitializer.Seed().Wait();
 
         }
     }

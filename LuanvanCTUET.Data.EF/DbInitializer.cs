@@ -1,9 +1,9 @@
 ﻿using LuanvanCTUET.Data.Entity;
+using LuanvanCTUET.Data.Enum;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LuanvanCTUET.Data.EF
@@ -21,19 +21,18 @@ namespace LuanvanCTUET.Data.EF
             _userManager = userManager;
         }
 
-
         public async Task Seed()
         {
-            if(_context.Categories.Count() == 0) 
+            if (_context.Categories.Count() == 0)
             {
                 _context.Categories.AddRange(new List<Category>()
                 {
                     new Category() {Name="Điện thoại", Description="sản phẩm di động", HomeFlag=true, DateCreated=DateTime.Now},
                     new Category() {Name="Laptop", Description="máy tính", HomeFlag=true, DateCreated=DateTime.Now},
                     new Category() {Name="Máy tính bảng", Description="sản phẩm di động", HomeFlag=true, DateCreated=DateTime.Now},
-                });    
+                });
             }
-            if(!_roleManager.Roles.Any())
+            if (!_roleManager.Roles.Any())
             {
                 await _roleManager.CreateAsync(new AppRole()
                 {
@@ -59,16 +58,18 @@ namespace LuanvanCTUET.Data.EF
                 await _userManager.CreateAsync(new AppUser()
                 {
                     UserName = "admin",
-                    FullName = "administrator",
+                    FullName = "Administrator",
                     Email = "admin@gmail.com",
                     Balance = 0,
-                }, "123456");
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now,
+                    Status = Status.Active
+                }, "123654$");
                 var user = await _userManager.FindByNameAsync("admin");
                 await _userManager.AddToRoleAsync(user, "Admin");
             }
 
             _context.SaveChanges();
         }
-
     }
 }

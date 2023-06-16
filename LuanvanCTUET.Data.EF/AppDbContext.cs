@@ -3,6 +3,7 @@ using LuanvanCTUET.Data.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace LuanvanCTUET.Data.EF
 {
@@ -19,19 +20,33 @@ namespace LuanvanCTUET.Data.EF
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<IdentityUserClaim<string>>().ToTable("AppUserClaims").HasKey(t => t.Id);
-            builder.Entity<IdentityRoleClaim<string>>().ToTable("AppRoleClaims").HasKey(x => x.Id);
-            builder.Entity<IdentityUserLogin<string>>().ToTable("AppUserLogins").HasKey(x => x.UserId);
-            builder.Entity<IdentityUserRole<string>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
-            builder.Entity<IdentityUserToken<string>>().ToTable("AppUserToken").HasKey(x => new { x.UserId });
-
             builder.ApplyConfiguration(new ProductConfiguration());
-            builder.ApplyConfiguration(new CategoryConfiguration()); 
+            builder.ApplyConfiguration(new CategoryConfiguration());
+            builder.ApplyConfiguration(new AppUserConfiguration());
 
             base.OnModelCreating(builder);
+
+            foreach (var entityType in builder.Model.GetEntityTypes())
+            {
+                var tableName = entityType.GetTableName();
+                if (tableName.StartsWith("AspNet"))
+                {
+                    entityType.SetTableName(tableName.Substring(6));
+                }
+            }
         }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+    }
+
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+    {
+        public AppDbContext CreateDbContext(string[] args)
+        {
+            var builder = new DbContextOptionsBuilder<AppDbContext>();
+            builder.UseSqlServer("Server=.;Database=LuanvanCTUET;User ID=SA;Password=123456;MultipleActiveResultSets=true");
+            return new AppDbContext(builder.Options);
+        }
     }
 }

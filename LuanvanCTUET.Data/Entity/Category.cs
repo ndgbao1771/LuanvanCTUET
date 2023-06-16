@@ -22,9 +22,9 @@ namespace LuanvanCTUET.Data.Entity
             ParentId = parentId;
             HomeOrder = homeOrder;
             Image = image;
+            Status = status;
             HomeFlag = homeFlag;
             SortOrder = sortOrder;
-            Status = status;
             SeoPageTitle = seoPageTitle;
             SeoAlias = seoAlias;
             SeoKeyword = seoKeyword;

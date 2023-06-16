@@ -15,9 +15,9 @@ namespace LuanvanCTUET.Data.EF.Configuration
         {
             builder.ToTable("Categories");
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Name).HasMaxLength(256).IsRequired().HasColumnName("Tên danh mục");
-            builder.Property(c => c.Description).HasColumnName("Mô tả danh mục");
-            builder.Property(c => c.Image).HasColumnName("Hình ảnh");
+            builder.Property(c => c.Name).HasMaxLength(256).IsRequired();
+            builder.Property(c => c.Description);
+            builder.Property(c => c.Image);
         }
     }
 }
