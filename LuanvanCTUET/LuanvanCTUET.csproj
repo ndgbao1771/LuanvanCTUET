@@ -11,6 +11,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.14" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,19 @@
     <ProjectReference Include="..\LuanvanCTUET.Infrastructure\LuanvanCTUET.Infrastructure.csproj" />
     <ProjectReference Include="..\LuanvanCTUET.Service\LuanvanCTUET.Service.csproj" />
     <ProjectReference Include="..\LuanvanCTUET.Utilities\LuanvanCTUET.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\lib\font-awesome\" />
+    <Folder Include="wwwroot\lib\bootstrap-daterangepicker\" />
+    <Folder Include="wwwroot\lib\fastclick\" />
+    <Folder Include="wwwroot\lib\chartjs\" />
+    <Folder Include="wwwroot\lib\flot\" />
+    <Folder Include="wwwroot\lib\moment\" />
+    <Folder Include="wwwroot\lib\bootbox\" />
+    <Folder Include="wwwroot\lib\nprogress\" />
   </ItemGroup>
 
 </Project>
