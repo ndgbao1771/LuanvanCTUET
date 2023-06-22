@@ -16,7 +16,7 @@ namespace LuanvanCTUET
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            using(var scope = host.Services.CreateScope())
+            /*using(var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
@@ -30,7 +30,7 @@ namespace LuanvanCTUET
                     var logger = services.GetService<ILogger<Program>>();
                     logger.LogError(ex, "An error while seeding database!");
                 }
-            }
+            }*/
                 host.Run();
         }
 

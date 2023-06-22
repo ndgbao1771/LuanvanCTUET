@@ -1,4 +1,5 @@
 using AutoMapper;
+using LuanvanCTUET.Areas.Admin.Controllers;
 using LuanvanCTUET.Data.EF;
 using LuanvanCTUET.Data.EF.Repository;
 using LuanvanCTUET.Data.Entity;
@@ -10,10 +11,13 @@ using LuanvanCTUET.Service.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog.Core;
 using System;
 using System.Reflection;
 
@@ -55,6 +59,7 @@ namespace LuanvanCTUET
                 //User settings
                 options.User.RequireUniqueEmail = true;
             });
+            services.AddLogging();
 
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
@@ -68,14 +73,20 @@ namespace LuanvanCTUET
 
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
 
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "RequesVerificationToken"; //may be any other valid header name
+            });
+
             services.AddControllersWithViews();
-            services.AddMvc(options => options.EnableEndpointRouting = false);
-            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
+            DbInitializer.Initialize(serviceProvider);
+
+            loggerFactory.AddFile("Logs/luanvan-{Date}.txt");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -96,15 +107,14 @@ namespace LuanvanCTUET
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                   name: "Area",
+                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 
             });
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(name: "areaRoute", template:"{area:exists}/{controller=Home}/{action=Index}/{id?}");
-            });
-
 
         }
     }
